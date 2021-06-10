@@ -1,7 +1,7 @@
 import Foundation
 import CocoaLumberjackSwift
 
-public struct Alog {
+public struct ALog {
     
     public init(_ level: DDLogLevel = dynamicLogLevel) {
         // FIXME: 每个 log 的 level? 还是做成单例 ?

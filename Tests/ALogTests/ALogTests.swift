@@ -6,7 +6,7 @@ final class ALogTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        let log = Alog(.error)
+        let log = ALog(.error)
         log.debug("test")
         log.error("error")
     }
