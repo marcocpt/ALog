@@ -1,12 +1,12 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by marcow on 2021/6/10.
 //
 
-import Foundation
 import CocoaLumberjackSwift
+import Foundation
 
 class ALogFormatter: NSObject, DDLogFormatter {
     func format(message logMessage: DDLogMessage) -> String? {

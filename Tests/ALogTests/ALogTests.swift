@@ -1,5 +1,5 @@
-import XCTest
 @testable import ALog
+import XCTest
 
 final class ALogTests: XCTestCase {
     func testExample() {
