@@ -25,7 +25,7 @@ class ALogFormatter: NSObject, DDLogFormatter {
         default:
             fatalError()
         }
-        let fileInfo = "(\(logMessage.file.components(separatedBy: "/").last ?? "nil") - \(logMessage.function ?? "nil") \(logMessage.line))"
+        let fileInfo = "[\(logMessage.function ?? "nil")][\(logMessage.file.components(separatedBy: "/").last ?? "nil")][\(logMessage.line)]"
         return "\(logLevel) | \(logMessage.message) \(fileInfo)"
     }
 }
