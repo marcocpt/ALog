@@ -26,6 +26,12 @@ class ALogFormatter: NSObject, DDLogFormatter {
             fatalError()
         }
         let fileInfo = "[\(logMessage.function ?? "nil")][\(logMessage.file.components(separatedBy: "/").last ?? "nil")][\(logMessage.line)]"
-        return "\(logLevel) | \(logMessage.message) \(fileInfo)"
+        // 换行加 logLevel 前缀
+        let message = logMessage.message
+            .components(separatedBy: .newlines).map { "\(logLevel) | " + $0 }
+            .reduce("") { $0 + $1 + "\n" }
+            .dropLast()
+            
+        return "\(message) \(fileInfo)"
     }
 }
