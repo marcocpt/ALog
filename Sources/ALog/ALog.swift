@@ -4,9 +4,12 @@ import Foundation
 public var PRINT_TEST = true
 
 public struct ALog {
-    public init(_ level: DDLogLevel = dynamicLogLevel) {
+    public struct Key {
+        public static let level = "ALog.Key.level"
+    }
+    public init(_ level: LogLevel = dynamicLogLevel.l) {
         // FIXME: 每个 log 的 level? 还是做成单例 ?
-        dynamicLogLevel = level
+        dynamicLogLevel = level.d
         DDOSLogger.sharedInstance.logFormatter = ALogFormatter()
         DDLog.add(DDOSLogger.sharedInstance)
 
@@ -15,6 +18,8 @@ public struct ALog {
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger)
     }
+
+    public var level: LogLevel { dynamicLogLevel.l }
 
     public func error(_ message: @autoclosure () -> Any,
                       level: DDLogLevel = .all,
