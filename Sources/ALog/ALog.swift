@@ -7,7 +7,10 @@ public struct ALog {
     public struct Key {
         public static let level = "ALog.Key.level"
     }
-    public init(_ level: LogLevel = dynamicLogLevel.l) {
+
+    public var disableFiles: [String]
+
+    public init(_ level: LogLevel = dynamicLogLevel.l, disableFiles: [String] = []) {
         // FIXME: 每个 log 的 level? 还是做成单例 ?
         dynamicLogLevel = level.d
         DDOSLogger.sharedInstance.logFormatter = ALogFormatter()
@@ -17,6 +20,8 @@ public struct ALog {
         fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger)
+
+        self.disableFiles = disableFiles
     }
 
     public var level: LogLevel { dynamicLogLevel.l }
@@ -31,6 +36,7 @@ public struct ALog {
                       asynchronous async: Bool = false,
                       ddlog: DDLog = .sharedInstance)
     {
+        guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
         _DDLogMessage(message(), level: level, flag: .error, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -44,6 +50,7 @@ public struct ALog {
                      asynchronous async: Bool = false,
                      ddlog: DDLog = .sharedInstance)
     {
+        guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
         _DDLogMessage(message(), level: level, flag: .warning, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -57,6 +64,7 @@ public struct ALog {
                      asynchronous async: Bool = false,
                      ddlog: DDLog = .sharedInstance)
     {
+        guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
         _DDLogMessage(message(), level: level, flag: .info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -70,6 +78,7 @@ public struct ALog {
                       asynchronous async: Bool = false,
                       ddlog: DDLog = .sharedInstance)
     {
+        guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
         _DDLogMessage(message(), level: level, flag: .debug, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -83,6 +92,7 @@ public struct ALog {
                         asynchronous async: Bool = false,
                         ddlog: DDLog = .sharedInstance)
     {
+        guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
         _DDLogMessage(message(), level: level, flag: .verbose, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 }
