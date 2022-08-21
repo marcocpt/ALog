@@ -9,8 +9,9 @@ public struct ALog {
     }
 
     public var disableFiles: [String]
+    public var onlyFiles: [String] = []
 
-    public init(_ level: LogLevel = dynamicLogLevel.l, disableFiles: [String] = []) {
+    public init(_ level: LogLevel = dynamicLogLevel.l, disableFiles: [String] = [], onlyFiles: [String] = []) {
         // FIXME: 每个 log 的 level? 还是做成单例 ?
         dynamicLogLevel = level.d
         DDOSLogger.sharedInstance.logFormatter = ALogFormatter()
@@ -22,6 +23,7 @@ public struct ALog {
         DDLog.add(fileLogger)
 
         self.disableFiles = disableFiles
+        self.onlyFiles = onlyFiles
     }
 
     public var level: LogLevel { dynamicLogLevel.l }
@@ -37,6 +39,8 @@ public struct ALog {
                       ddlog: DDLog = .sharedInstance)
     {
         guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
+        if !onlyFiles.isEmpty, onlyFiles.filter({ file.description.contains($0) }).isEmpty { return }
+
         _DDLogMessage(message(), level: level, flag: .error, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -51,6 +55,8 @@ public struct ALog {
                      ddlog: DDLog = .sharedInstance)
     {
         guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
+        if !onlyFiles.isEmpty, onlyFiles.filter({ file.description.contains($0) }).isEmpty { return }
+
         _DDLogMessage(message(), level: level, flag: .warning, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -65,6 +71,8 @@ public struct ALog {
                      ddlog: DDLog = .sharedInstance)
     {
         guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
+        if !onlyFiles.isEmpty, onlyFiles.filter({ file.description.contains($0) }).isEmpty { return }
+
         _DDLogMessage(message(), level: level, flag: .info, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -79,6 +87,8 @@ public struct ALog {
                       ddlog: DDLog = .sharedInstance)
     {
         guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
+        if !onlyFiles.isEmpty, onlyFiles.filter({ file.description.contains($0) }).isEmpty { return }
+
         _DDLogMessage(message(), level: level, flag: .debug, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 
@@ -93,6 +103,8 @@ public struct ALog {
                         ddlog: DDLog = .sharedInstance)
     {
         guard disableFiles.filter({ file.description.contains($0) }).isEmpty else { return }
+        if !onlyFiles.isEmpty, onlyFiles.filter({ file.description.contains($0) }).isEmpty { return }
+        
         _DDLogMessage(message(), level: level, flag: .verbose, context: context, file: file, function: function, line: line, tag: tag, asynchronous: async, ddlog: ddlog)
     }
 }
