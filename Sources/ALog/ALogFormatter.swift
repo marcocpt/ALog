@@ -11,7 +11,7 @@ import Foundation
 class ALogFormatter: NSObject, DDLogFormatter {
     func format(message logMessage: DDLogMessage) -> String? {
         let logLevel = logMessage.flag.l.emoji
-        let fileInfo = "[\(logMessage.function ?? "nil")][\(logMessage.file.components(separatedBy: "/").last ?? "nil")][\(logMessage.line)]"
+        let fileInfo = "[\(logMessage.file.components(separatedBy: "/").last ?? "nil")][\(logMessage.function ?? "nil")][\(logMessage.line)]"
         // 换行加 logLevel 前缀
         let message = logMessage.message
             .components(separatedBy: .newlines).map { "\(logLevel) | " + $0 }
